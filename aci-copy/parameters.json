@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceNamePrefix": {
+            "value": "gooner1017"
+        },
+        "imageType": {
+            "value": "Public"
+        },
+        "imageName": {
+            "value": "thara0402/cypress-docker:1.3.0"
+        },
+        "osType": {
+            "value": "Linux"
+        },
+        "numberCpuCores": {
+            "value": "1"
+        },
+        "memory": {
+            "value": "1.5"
+        },
+        "restartPolicy": {
+            "value": "Never"
+        },
+        "ipAddressType": {
+            "value": "Public"
+        },
+        "ports": {
+            "value": [
+                {
+                    "port": "80",
+                    "protocol": "TCP"
+                }
+            ]
+        },
+        "environmentVariables": {
+            "value": [
+                {
+                    "name": "cypress_target_url",
+                    "value": "https://www.google.co.jp"
+                }
+            ]
+        },
+        "numberOfInstances": {
+            "value": 3
+        }
+    }
+}

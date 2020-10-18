@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceNamePrefix": {
+            "type": "string"
+        },
+        "imageType": {
+            "type": "string",
+            "allowedValues": [
+                "Public",
+                "Private"
+            ]
+        },
+        "imageName": {
+            "type": "string"
+        },
+        "osType": {
+            "type": "string",
+            "allowedValues": [
+                "Linux",
+                "Windows"
+            ]
+        },
+        "numberCpuCores": {
+            "type": "string"
+        },
+        "memory": {
+            "type": "string"
+        },
+        "restartPolicy": {
+            "type": "string",
+            "allowedValues": [
+                "OnFailure",
+                "Always",
+                "Never"
+            ]
+        },
+        "ipAddressType": {
+            "type": "string"
+        },
+        "ports": {
+            "type": "array"
+        },
+        "environmentVariables": {
+            "type": "array"
+        },
+        "numberOfInstances": {
+            "type": "int",
+            "minValue": 1,
+            "maxValue": 10
+        }
+    },
+    "variables": {
+        "containerInstanceName":"[concat(parameters('resourceNamePrefix'), '-aic')]"
+    },
+    "resources": [
+        {
+            "location": "[resourceGroup().location]",
+            "name": "[concat(variables('containerInstanceName'), copyindex())]",
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2019-12-01",
+            "properties": {
+                "containers": [
+                    {
+                        "name": "[concat(variables('containerInstanceName'), copyindex())]",
+                        "properties": {
+                            "image": "[parameters('imageName')]",
+                            "resources": {
+                                "requests": {
+                                    "cpu": "[int(parameters('numberCpuCores'))]",
+                                    "memoryInGB": "[float(parameters('memory'))]"
+                                }
+                            },
+                            "environmentVariables": "[parameters('environmentVariables')]",
+                            "ports": "[parameters('ports')]"
+                        }
+                    }
+                ],
+                "restartPolicy": "[parameters('restartPolicy')]",
+                "osType": "[parameters('osType')]",
+                "ipAddress": {
+                    "type": "[parameters('ipAddressType')]",
+                    "ports": "[parameters('ports')]",
+                    "dnsNameLabel": "[concat(variables('containerInstanceName'), copyindex())]"
+                }
+            },
+            "tags": {},
+            "copy": {
+                "name": "containerInstanceLoop",
+                "count": "[parameters('numberOfInstances')]"
+            }
+       }
+    ],
+    "outputs": {
+    }
+}

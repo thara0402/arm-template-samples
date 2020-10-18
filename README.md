@@ -27,3 +27,5 @@ $ az group delete -n <ResourceGroup Name>
 - [複数の仮想マシンを作成する](./vm-copy/template.json)
 - [カスタムイメージから複数の仮想マシンを作成する](./vm-copy-custom-image/template.json)
 - [Shared Image Gallery から複数の仮想マシンを作成する](./vm-copy-sig/template.json)
+### Azure Container Instances
+- [Cypress で負荷テストを実行する](./aci-copy/template.json)
