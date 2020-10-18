@@ -52,7 +52,7 @@
         }
     },
     "variables": {
-        "containerInstanceName":"[concat(parameters('resourceNamePrefix'), '-aic')]"
+        "containerInstanceName":"[concat(parameters('resourceNamePrefix'), '-aci')]"
     },
     "resources": [
         {
